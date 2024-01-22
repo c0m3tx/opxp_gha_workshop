@@ -6,11 +6,11 @@
 # push often and trigger the workflow as much as you need.
 # Let's start!
 #
-# Your lovely 🦤 the EM has given you the task to implement the first draft of a CI
+# Your lovely 🦆 the EM has given you the task to implement the first draft of a CI
 # pipeline for your Elixir project. The pipeline should format, test and create a release.
 # You feel a bit scared, but don't worry, you can count on 🐼 the Devops Champion and their hints.
 #
-# 🦤 Requirements
+# 🦆 Requirements
 #
 # 1. Workflow should run **only** on pull_request opened targeting main branch
 #
@@ -35,14 +35,14 @@
 # <-- INSERT HERE YOUR CODE -->
 
 #
-# "Good job!" exclaim 🦤 the EM. You're ready to close your laptop and go home when you hear them say
-# "I think we can improve this first solution and make this CI more efficient!". While wondering if 🦤s
+# "Good job!" exclaim 🦆 the EM. You're ready to close your laptop and go home when you hear them say
+# "I think we can improve this first solution and make this CI more efficient!". While wondering if 🦆s
 # are good with potatos or not, you ask them how you can improve your perfect solution.
 #
 # FIRST IMPROVEMENT
 #
 # "Right now we have 3 different jobs that download every time the same dependencies wasting time. We can
-# fix this with the use of a cache system" says 🦤 the EM
+# fix this with the use of a cache system" says 🦆 the EM
 #
 # 1. Cache mix dependencies so that jobs can skip the `mix deps.get` step. Use `actions/cache` action and
 #    run mix deps.get step conditionally if we miss the cache.
@@ -57,7 +57,7 @@
 #
 # "We are probably repeating a lot of code (installing dependencies, setup/checking cache) and it could
 # be useful using a [`composite` actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)
-# to DRY our workflow" ponder 🦤 the EM
+# to DRY our workflow" ponder 🦆 the EM
 #
 # 2. Create a composite custom action in the repo that setup beam environment, setup cache, and conditionally
 #    install mix dependencies
@@ -66,7 +66,7 @@
 #           to checkout your repo before call the composite action
 #
 
-# Great job! At this point even 🦤 the EM is happy and you can go home. Why however there are some other requirements below?
+# Great job! At this point even 🦆 the EM is happy and you can go home. Why however there are some other requirements below?
 # Next change is just to better understand usage of artifacts, but
 # it's not something that you'll see often in Prima (at least not in this way). So proceed only if you want to
 # challenge yourself
