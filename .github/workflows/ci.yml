@@ -1,0 +1,88 @@
+# NOTES BEFORE STARTING
+# Requirements are ordered based on difficulty, but there are no shame
+# in searching on the official documentation or asking clarification
+# questions. Take this as an exercise to improve your knowledge while practicing them.
+# Use the ci pipeline to give you feedback about your workflow, so
+# push often and trigger the workflow as much as you need.
+# Let's start!
+#
+# Your lovely 🦤 the EM has given you the task to implement the first draft of a CI
+# pipeline for your Elixir project. The pipeline should format, test and create a release.
+# You feel a bit scared, but don't worry, you can count on 🐼 the Devops Champion and their hints.
+#
+# 🦤 Requirements
+#
+# 1. Workflow should run **only** on pull_request opened targeting main branch
+#
+# 2. Create a job `format` that check code has been correctly formatted
+#
+#    - 🐼's HINT: remember that your code will be executed on the runner which is a bare
+#      ubuntu machine, while your job requires elixir and erlang to execute mix commands.
+#      Good news is that there is an official action (erlef/setup-beam) that you can use.
+#
+#    - 🐼's HINT: don't forget that your application needs all depedencies defined in mix.exs
+#      (and mix.lock) to compile
+#
+#    - 🐼's HINT: elixir command for this kind of job is `mix format --check-formatted`
+#
+# 3. Create a parallel job `test` that run application's tests using same elixir and erlang version
+#    used in job `format`
+#
+# 4. Create another parallel job `release` that create a mix release for your application using same
+#    elixir and erlang version used in jobs `format` and `tests`
+#
+
+# <-- INSERT HERE YOUR CODE -->
+
+#
+# "Good job!" exclaim 🦤 the EM. You're ready to close your laptop and go home when you hear them say
+# "I think we can improve this first solution and make this CI more efficient!". While wondering if 🦤s
+# are good with potatos or not, you ask them how you can improve your perfect solution.
+#
+# FIRST IMPROVEMENT
+#
+# "Right now we have 3 different jobs that download every time the same dependencies wasting time. We can
+# fix this with the use of a cache system" says 🦤 the EM
+#
+# 1. Cache mix dependencies so that jobs can skip the `mix deps.get` step. Use `actions/cache` action and
+#    run mix deps.get step conditionally if we miss the cache.
+#
+#    - 🐼's HINT: `actions/cache` requires you to define a key for your cache. Try to use something unique
+#            for this. An often used function for this kind of things is the method `hashFiles` that creates
+#            an hash starting from a file content. Which file would be the most adequate for
+#            identify elixir dependecies?
+#
+#
+# SECOND IMPROVEMENT
+#
+# "We are probably repeating a lot of code (installing dependencies, setup/checking cache) and it could
+# be useful using a [`composite` actions](https://docs.github.com/en/actions/creating-actions/creating-a-composite-action)
+# to DRY our workflow" ponder 🦤 the EM
+#
+# 2. Create a composite custom action in the repo that setup beam environment, setup cache, and conditionally
+#    install mix dependencies
+#
+#   - 🐼's HINT: remember that since your custom action will live in the same repo of your workflow, you will still need
+#           to checkout your repo before call the composite action
+#
+
+# Great job! At this point even 🦤 the EM is happy and you can go home. Why however there are some other requirements below?
+# Next change is just to better understand usage of artifacts, but
+# it's not something that you'll see often in Prima (at least not in this way). So proceed only if you want to
+# challenge yourself
+#
+# GREET THE WORLD
+#
+# In the job `release` we create a new release, but we are actually not using it. In a real environment we'd
+# probably upload its output (aka the `_build` folder) in an S3 bucket and then download it when deploying
+# For this project we can do something simplier.
+#
+# 1. Upload the release artifact using `actions/upload-artifact` in the `release` job
+# 2. Create a new job that should downloading the release artifact (with `actions/download-artifact`)
+#    and then run the method `GhaWorkshop.greet()`.
+#    Check that in the logs of the workflow (when green) you can read "Hello world!"
+#
+#   - 🐼's HINT: You can run commands from the release executable with command `./bin/RELEASE_NAME eval "your command"`
+#   - 🐼's HINT: For your sanity and to not lose too much time, you must make the whole folder you downloaded as
+#           artifact executable with `chmod -R +x`
+#

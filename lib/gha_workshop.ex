@@ -15,4 +15,9 @@ defmodule GhaWorkshop do
   def hello do
     :world
   end
+
+  def greet do
+    IO.puts("Hello world!")
+    :ok
+  end
 end
