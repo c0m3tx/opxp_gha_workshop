@@ -1,7 +1,7 @@
 # NOTES BEFORE STARTING
 # Requirements are ordered based on difficulty, but there are no shame
 # in searching on the official documentation or asking clarification
-# questions. Take this as an exercise to improve your knowledge while practicing them.
+# questions. Take this exercise as a way to improve your knowledge experimenting directly with Github actions.
 # Use the ci pipeline to give you feedback about your workflow, so
 # push often and trigger the workflow as much as you need.
 # Let's start!
