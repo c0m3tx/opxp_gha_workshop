@@ -58,6 +58,10 @@ jobs:
     needs: build_image
     runs-on: "ubuntu-latest"
     steps:
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: OTP-26.0
+          elixir-version: v1.14-otp-26
       - uses: actions/download-artifact@v3
         with:
           name: "elixir-super-duper-app"
@@ -68,6 +72,10 @@ jobs:
     needs: build_image
     runs-on: "ubuntu-latest"
     steps:
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: OTP-26.0
+          elixir-version: v1.14-otp-26
       - uses: actions/download-artifact@v3
         with:
           name: "elixir-super-duper-app"
@@ -75,9 +83,15 @@ jobs:
       - name: run tests
         run: mix test
   release:
-    needs: build_image
+    needs:
+      - format
+      - test
     runs-on: "ubuntu-latest"
     steps:
+      - uses: erlef/setup-beam@v1
+        with:
+          otp-version: OTP-26.0
+          elixir-version: v1.14-otp-26
       - uses: actions/download-artifact@v3
         with:
           name: "elixir-super-duper-app"
