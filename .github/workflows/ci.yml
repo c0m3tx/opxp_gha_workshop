@@ -32,8 +32,56 @@
 #    elixir and erlang version used in jobs `format` and `tests`
 #
 
-# <-- INSERT HERE YOUR CODE -->
+name: c0m3tx got a PR!
+on:
+  pull_request:
+    branches: ["main"]
 
+jobs:
+  build_image:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: erlef/setup-beam@v1
+        with:
+          elixir-version: v1.14-otp-26
+      - name: retrieve dependencies
+        run: mix deps.get
+      - uses: actions/upload-artifact@v4
+        with:
+          name: "elixir-super-duper-app"
+          path: "*"
+          retention-days: 1
+
+  format:
+    needs: build_image
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: "elixir-super-duper-app"
+          path: "."
+      - name: check format
+        run: mix format --check-formatted
+  test:
+    needs: build_image
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: "elixir-super-duper-app"
+          path: "."
+      - name: run tests
+        run: mix test
+  release:
+    runs-on: "ubuntu-latest"
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: "elixir-super-duper-app"
+          path: "."
+      - name: create release
+        run: mix release
 #
 # "Good job!" exclaim 🦆 the EM. You're ready to close your laptop and go home when you hear them say
 # "I think we can improve this first solution and make this CI more efficient!". While wondering if 🦆s
