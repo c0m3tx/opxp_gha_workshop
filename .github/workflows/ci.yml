@@ -48,7 +48,7 @@ jobs:
           elixir-version: v1.14-otp-26
       - name: retrieve dependencies
         run: mix deps.get
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v3
         with:
           name: "elixir-super-duper-app"
           path: "*"
@@ -58,7 +58,7 @@ jobs:
     needs: build_image
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v3
         with:
           name: "elixir-super-duper-app"
           path: "."
@@ -68,16 +68,17 @@ jobs:
     needs: build_image
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v3
         with:
           name: "elixir-super-duper-app"
           path: "."
       - name: run tests
         run: mix test
   release:
+    needs: build_image
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v3
         with:
           name: "elixir-super-duper-app"
           path: "."
